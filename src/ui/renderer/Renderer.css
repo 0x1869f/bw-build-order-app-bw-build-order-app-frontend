@@ -1,0 +1,28 @@
+.renderer__build-order__item {
+  display: flex;
+  gap: 4px;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.renderer__build-order__item_canceled {
+  background: red;
+}
+
+
+.renderer__build-order__item__element {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  width: 250px;
+}
+
+.renderer__build-order__item__supply {
+  display: flex;
+  align-items: center;
+}
+
+.renderer__build-order__item__image {
+  height: 36px;
+  width: 36px;
+}

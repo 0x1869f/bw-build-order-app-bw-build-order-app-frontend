@@ -1,0 +1,29 @@
+{
+  "name": "broodwar-replays",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "esmodule",
+      "in-source": true
+    }
+  ],
+  "suffix": ".res.mjs",
+  "bs-dependencies": [
+    "@rescript/core",
+    "@rescript/react",
+    "@rescript-mui/material",
+    "rescript-webapi",
+    "rescript-nodejs"
+  ],
+  "bsc-flags": [
+    "-open RescriptCore"
+  ],
+  "jsx": {
+    "version": 4
+  }
+}
