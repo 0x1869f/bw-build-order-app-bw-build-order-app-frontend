@@ -1,0 +1,13 @@
+.profile-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-settings__card {
+  max-width: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px;
+}

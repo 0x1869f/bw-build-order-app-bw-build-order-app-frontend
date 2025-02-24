@@ -24,7 +24,9 @@ let jsonRequest = async (url: Url.t, config: Request.config) => {
         headers -> Headers.append("Content-Type", "application/json")
         headers
       }
-      | None => Headers.makeWithConfig(Dict.fromArray([("Content-Type", "application/json")]))
+      | None => [("Content-Type", "application/json")]
+        -> Dict.fromArray
+        -> Headers.makeWithConfig
     }
   }
 
@@ -61,7 +63,9 @@ let jsonRequestWithAuth = async (url: Url.t, config: Request.config) => {
             headers -> Headers.append("authorization", `Bearer ${token}`)
             headers
           }
-          | None => Headers.makeWithConfig(Dict.fromArray([("authorization", `Bearer ${token}`)]))
+          | None => [("authorization", `Bearer ${token}`)]
+            -> Dict.fromArray
+            -> Headers.makeWithConfig
         }
       }
 

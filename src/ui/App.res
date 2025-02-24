@@ -4,40 +4,53 @@
 let make = () => {
   Signal.track()
 
-  UserStorage.init() -> ignore
-  TagStorage.init() -> ignore
-  BuildingStorage.init() -> ignore
-  UnitStorage.init() -> ignore
-  UpgradeStorage.init() -> ignore
-  MapStorage.init() -> ignore
+  let isLoading = Signal.useSignal(false)
 
+  React.useEffect0(() => {
+    isLoading -> Signal.set(true)
 
-  let route = Signal.useSignal(Route.BuildOrderList)
+    Promise.all([
+      RaceIconStorage.init(),
+      UserStorage.init(),
+      TagStorage.init(),
+      BuildingStorage.init(),
+      UnitStorage.init(),
+      UpgradeStorage.init(),
+      MapStorage.init(),
+      BuildOrderStorage.init(),
+      PlayerStorage.init(),
+      ReplayStorage.init(),
+      ExternalServiceIcon.init(),
+    ])
+      -> Promise.then((_) => {
+        isLoading -> Signal.set(false)
+        Promise.resolve()
+      }) -> ignore
 
-  let watcherId = RescriptReactRouter.watchUrl((url) => {
-    route -> Signal.set(switch url.path {
-      | list{"new-build-order"} => Route.NewBuildOrder
-      | _ => Route.BuildOrderList
-    })
+    None
   })
 
-  React.useEffect(() => {
-    Some(() => RescriptReactRouter.unwatchUrl(watcherId))
-  }, [])
-
-  let page = Signal.useComputed(() => {
-    let child = switch route -> Signal.get {
-      | Route.NewBuildOrder => <Editor />
+  let child = Signal.useComputed(() => 
+    switch Route.currentRoute -> Signal.get {
+      | Route.NewBuildOrder => <BuildOrderEditor variant={BuildOrderEditor.New} />
+      | Route.BuildOrder(bo) => <BuildOrderPage bo={bo} />
+      | Route.PlayerList => <PlayerList />
+      | Route.ReplayList => <ReplayList />
+      | Route.BuildOrderEditor(bo) => <BuildOrderEditor variant={BuildOrderEditor.Edit(bo)} />
       | Route.BuildOrderList => <BuildOrderList />
+      | Route.ProfileSettings => <ProfileSettings />
+      | _ => <BuildOrderList />
     }
+  )
 
-    <div>
+  isLoading -> Signal.get
+    ? <Mui.LinearProgress />
+    : <div>
       <Header />
-      child
+      <Notification />
+      <Navigation />
+      <div className="view-container">
+        {child -> Signal.get}
+      </div>
     </div>
-  })
-
-      
-
-  page -> Signal.get
 }

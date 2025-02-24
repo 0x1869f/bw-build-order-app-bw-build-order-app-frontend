@@ -1,0 +1,44 @@
+.replay-list-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 350px;
+  position: relative;
+}
+
+.replay-list-item__actions {
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+}
+
+.replay-list-item__players {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.replay-list-item__player-info {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.replay-list-item__map-info {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.replay-list-item__build-order-info {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.replay-list-item__download-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}

@@ -2,3 +2,19 @@
   height: 36px;
   width: 36px;
 }
+
+.view-container {
+  padding: 16px;
+}
+
+.form__content {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form__actions {
+  display: flex;
+  gap: 8px;
+}

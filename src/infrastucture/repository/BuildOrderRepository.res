@@ -1,13 +1,18 @@
 let getInfoList = async () => {
-  let result: result<array<BuildOrder.Info.t>, AppError.t> = await Url.fromString("build-orders")
+  let result: result<array<ApiBuildOrder.Info.t>, AppError.t> = await Url.fromString("build-orders")
     -> Api.request({method: Get})
 
-  result
+  switch result {
+    | Ok(value) => value
+      -> Array.map(ApiBuildOrder.Info.toBuildOrderInfo)
+      -> Ok
+    | Error(e) => Error(e)
+  }
 }
 
 let get = async (id: Id.t) => {
   let params = Dict.fromArray([("build-order", id)])
-  let url = ["admin", "build-order"]
+  let url = ["build-order"]
 
   let result: result<ApiBuildOrder.t, AppError.t> = await Url.make(url, ~params=params)
     -> Api.request({method: Get})
@@ -40,9 +45,13 @@ let update = async (bo: BuildOrder.new, id: string) => {
   let params = [("build-order", id)] -> Dict.fromArray
   let url = ["admin", "build-order"] -> Url.make(~params=params)
 
-  let result: result<ApiBuildOrder.t, AppError.t> = await url -> Api.request({
-    method: Post,
-    body: bo -> JSON.stringifyAny -> Option.getUnsafe -> Http.Body.make,
+  let result: result<ApiBuildOrder.t, AppError.t> = await url -> Api.jsonRequestWithAuth({
+    method: Put,
+    body: bo
+      -> ApiBuildOrder.fromNewBuildOrder
+      -> JSON.stringifyAny
+      -> Option.getUnsafe
+      -> Http.Body.make,
   })
 
   switch result {

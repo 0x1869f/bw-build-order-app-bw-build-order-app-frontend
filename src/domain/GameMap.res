@@ -1,4 +1,9 @@
-type t = {
+type new = {
   name: string,
-  picture: Nullable.t<string>
+}
+
+type t = {
+  ...new,
+  id: Id.t,
+  image: option<string>,
 }

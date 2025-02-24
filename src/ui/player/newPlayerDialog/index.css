@@ -1,0 +1,11 @@
+.new-player-dialog__form {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.new-player-dialog__actions {
+  display: flex;
+  gap: 8px;
+}

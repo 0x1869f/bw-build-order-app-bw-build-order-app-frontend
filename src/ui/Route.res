@@ -1,5 +1,17 @@
-type t =
-  | @as("/build-order-list") BuildOrderList
-  | @as("/new-build-order") NewBuildOrder
+type t = 
+  | BuildOrderList 
+  | NewBuildOrder 
+  | ReplayList 
+  | Replay(Replay.t)
+  | ReplayEditor(Replay.t)
+  | BuildOrderEditor(BuildOrder.t)
+  | BuildOrder(BuildOrder.t) 
+  | PlayerList
+  | ProfileSettings
 
-external url: t => string = "%identity"
+let currentRoute = Signal.useMake(BuildOrderList)
+
+let to = (route: t) => {
+  currentRoute -> Signal.set(route)
+}
+

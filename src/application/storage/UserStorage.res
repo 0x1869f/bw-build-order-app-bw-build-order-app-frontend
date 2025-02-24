@@ -1,26 +1,23 @@
-type payload = {
-  token: string
-}
-
-external jsonToPayload: JSON.t => payload = "%identity"
-
-let isLoggedIn = Signal.useMake(false)
 let admins: Signal.t<Dict.t<User.t>> = Dict.make() -> Signal.useMake
 let currentUser: Signal.t<option<User.t>> = None -> Signal.useMake
+let isLoggedIn = Signal.computed(() => currentUser -> Signal.get -> Option.isSome)
 
 let logout = () => {
-  isLoggedIn -> Signal.set(false)
   currentUser -> Signal.set(None)
   LocalStorage.delete(Token)
 }
 
+let isAdmin = Signal.computed(() => {
+  switch currentUser -> Signal.get {
+    | Some({role: User.Admin | User.Root}) => true
+    | _ => false
+  }
+})
+
 let login = async (login: string, password: string) => {
   switch await UserRepository.login(login, password) {
-    | Ok(value) => {
-      let payload = value -> jsonToPayload
+    | Ok(payload) => {
       LocalStorage.set(Token, payload.token)
-
-      isLoggedIn -> Signal.set(true)
 
       switch await UserRepository.getCurrent() {
         | Ok(user) => {
@@ -34,6 +31,19 @@ let login = async (login: string, password: string) => {
   }
 }
 
+let updateNickname = async (nickname: string) => {
+  switch await UserRepository.updateNickname(nickname) {
+    | Ok(_) => {
+      switch currentUser -> Signal.get {
+        | Some(user) => currentUser -> Signal.set(Some({...user, nickname}))
+        | None => ()
+      }
+      Ok()
+    }
+    | Error(e) => Error(e)
+  }
+}
+
 
 let init = async () => {
   let login = LocalStorage.get(LocalStorage.Token) -> Option.isSome
@@ -44,8 +54,6 @@ let init = async () => {
       | Error(_) => ()
     }
   }
-
-  isLoggedIn -> Signal.set(login)
 
   (await UserRepository.getAdmins())
     -> Result.getOr([])

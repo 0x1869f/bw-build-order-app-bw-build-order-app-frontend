@@ -1,0 +1,13 @@
+services:
+  broodwar-replays-frontent:
+    build: .
+    ports:
+      - 80:80
+    volumes:
+      - broodwar-replays-static:/usr/share/nginx/html/static/
+
+volumes:
+  broodwar-replays-static:
+    external: true
+    name: broodwar-replays-static
+

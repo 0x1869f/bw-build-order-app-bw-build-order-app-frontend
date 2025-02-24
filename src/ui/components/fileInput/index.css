@@ -1,0 +1,11 @@
+.file-input {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.file-input__button-content {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}

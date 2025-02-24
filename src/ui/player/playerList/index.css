@@ -1,0 +1,12 @@
+.player-list__filters {
+  display: flex;
+  gap: 8px;
+  align-items: end;
+}
+
+.player-list__items {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}

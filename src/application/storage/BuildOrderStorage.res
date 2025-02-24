@@ -1,7 +1,17 @@
 let infoList: Signal.t<array<BuildOrder.Info.t>> = Signal.useMake([])
 
-let init = (info: array<BuildOrder.Info.t>) => {
-  infoList -> Signal.set(info)
+let infoListDict = Signal.computed(() => {
+  infoList
+    -> Signal.get
+    -> Array.map((i) => (i.id, i))
+    -> Dict.fromArray
+})
+
+let init = async () => {
+  switch await BuildOrderRepository.getInfoList() {
+    | Ok(value) => infoList -> Signal.set(value)
+    | Error(_) => ()
+  }
 }
 
 let create = async (bo: BuildOrder.new) => {

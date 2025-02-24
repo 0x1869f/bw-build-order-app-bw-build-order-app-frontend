@@ -1,8 +1,9 @@
 module Step = {
-  type item = Building(Id.t) | Unit(Id.t) | Upgrade(Id.t)
+  type item = | @as(1) Building | @as(2) Unit | @as(3) Upgrade
 
   type t = {
-    element: item,
+    elementType: item,
+    elementId: Id.t,
     isRemovable: bool,
     isCanceled: bool,
     supplyLimitUpBy: int,
@@ -11,14 +12,14 @@ module Step = {
 
   let toBuildOrderStep = (step: t, race: Race.t): BuildOrder.Step.t => {
     {
-      element: switch step.element {
-        | Unit(v) => UnitStorage.getByName(race, v)
+      element: switch step.elementType {
+        | Unit => UnitStorage.getByName(race, step.elementId)
           -> Option.getUnsafe
           -> BuildOrder.Step.Unit
-        | Building(v)=> BuildingStorage.getByName(race, v)
+        | Building=> BuildingStorage.getByName(race, step.elementId)
           -> Option.getUnsafe
           -> BuildOrder.Step.Building
-        | Upgrade(v) => UpgradeStorage.getByName(race, v)
+        | Upgrade => UpgradeStorage.getByName(race, step.elementId)
           -> Option.getUnsafe
           -> BuildOrder.Step.Upgrade
       },
@@ -30,15 +31,40 @@ module Step = {
   }
 
   let fromStep = (step: BuildOrder.Step.t): t => {
-    element: switch step.element {
-      | Unit(v) => Unit(v.name)
-      | Building(v) => Building(v.name)
-      | Upgrade(v) => Upgrade(v.name)
-    },
-    isRemovable: step.isRemovable,
-    isCanceled: step.isCanceled,
-    supplyLimitUpBy: step.supplyLimitUpBy,
-    comment: step.comment,
+    let (elementType, elementId) = switch step.element {
+      | BuildOrder.Step.Unit(v) => (Unit, v.name)
+      | BuildOrder.Step.Building(v) => (Building, v.name)
+      | BuildOrder.Step.Upgrade(v) => (Upgrade, v.name)
+    }
+
+    {
+      elementType,
+      elementId,
+      isRemovable: step.isRemovable,
+      isCanceled: step.isCanceled,
+      supplyLimitUpBy: step.supplyLimitUpBy,
+      comment: step.comment,
+    }
+  }
+}
+
+module Info = {
+  type t = {
+    id: Id.t,
+    name: string,
+    race: Race.t,
+    opponentRace: Race.t,
+    tags: array<Id.t>,
+    creator: Id.t,
+  }
+
+  let toBuildOrderInfo = (info: t): BuildOrder.Info.t => {
+    id: info.id,
+    name: info.name,
+    race: info.race,
+    opponentRace: info.opponentRace,
+    tags: info.tags -> Array.map(t => t -> TagStorage.byId -> Option.getUnsafe),
+    creator: info.creator,
   }
 }
 
@@ -67,7 +93,7 @@ let toBuildOrder = (bo: t): BuildOrder.t => {
   race: bo.race,
   opponentRace: bo.opponentRace,
   links: bo.links,
-  tags: bo.tags,
+  tags: bo.tags -> Array.map(t => t -> TagStorage.byId -> Option.getUnsafe),
 }
 
 let toBuildOrderInfo = (bo: t): BuildOrder.Info.t => {
@@ -75,6 +101,8 @@ let toBuildOrderInfo = (bo: t): BuildOrder.Info.t => {
   name: bo.name,
   race: bo.race,
   opponentRace: bo.opponentRace,
+  tags: bo.tags -> Array.map(t => t -> TagStorage.byId -> Option.getUnsafe),
+  creator: bo.creator,
 }
 
 let fromNewBuildOrder = (bo: BuildOrder.new): new => {
@@ -84,5 +112,5 @@ let fromNewBuildOrder = (bo: BuildOrder.new): new => {
   race: bo.race,
   opponentRace: bo.opponentRace,
   links: bo.links,
-  tags: bo.tags
+  tags: bo.tags -> Array.map(t => t.id)
 }

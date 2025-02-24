@@ -1,19 +1,5 @@
-module Form = {
-  type t = {
-    value: string
-  }
-
-  @get external target: ReactEvent.Form.t => t = "target"
-
-  let value = (t: ReactEvent.Form.t) => {
-    let v = t -> target
-
-    v.value
-  }
-}
-
 @react.component
-let make = (~isOpened: bool, ~onClose:unit => ()) => {
+let make = (~onClose:unit => ()) => {
   Signal.track()
 
   let nickname = Signal.useSignal("")
@@ -31,38 +17,51 @@ let make = (~isOpened: bool, ~onClose:unit => ()) => {
     }
   }
 
-  <Mui.Dialog open_={isOpened} onClose={(_, _) => onClose()}>
+  let isDisabled = Signal.computed(() => {
+    nickname -> Signal.get -> String.length === 0
+    || password -> Signal.get -> String.length === 0
+  })
+
+  <Mui.Dialog open_={true} onClose={(_, _) => onClose()}>
     <Mui.DialogTitle>
       {"Login" -> React.string}
     </Mui.DialogTitle>
 
     <Mui.DialogContent>
-      <div>
-        <Mui.InputLabel id="name-input">
-          {React.string("Nickname")}
-        </Mui.InputLabel>
-        <Mui.TextField
-          value={nickname -> Signal.get}
-          onChange={v => nickname -> Signal.set(v -> Form.value)}
-        />
-      </div>
+      <div className="form__content">
+        <div>
+          <Mui.TextField
+            label={"nickname *" -> React.string}
+            value={nickname -> Signal.get}
+            onChange={v => nickname -> Signal.set((v -> Form.stringValue).value)}
+          />
+        </div>
 
-      <div>
-        <Mui.InputLabel id="name-input">
-          {React.string("Password")}
-        </Mui.InputLabel>
-        <Mui.TextField
-          value={password -> Signal.get}
-          onChange={v => password -> Signal.set(v -> Form.value)}
-        />
-      </div>
+        <div>
+          <Mui.TextField
+            label={"password *" -> React.string}
+            value={password -> Signal.get}
+            onChange={v => password -> Signal.set((v -> Form.stringValue).value)}
+          />
+        </div>
 
-      <Mui.Button
-        onClick={(_) => login() -> ignore}
-        variant={Outlined}
-      >
-        {"Login" -> React.string}
-      </Mui.Button>
+        <div className="form__actions">
+          <Mui.Button
+            disabled={isDisabled -> Signal.get}
+            onClick={(_) => login() -> ignore}
+            variant={Contained}
+          >
+            {"login" -> React.string}
+          </Mui.Button>
+
+          <Mui.Button
+            onClick={(_) => onClose()}
+            variant={Outlined}
+          >
+            {"cancel" -> React.string}
+          </Mui.Button>
+        </div>
+      </div>
     </Mui.DialogContent>
   </Mui.Dialog>
 }

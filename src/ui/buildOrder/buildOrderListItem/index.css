@@ -1,0 +1,18 @@
+.build-order-list-item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  position: relative;
+  height: max-content;
+}
+
+.build-order-list-item__actions {
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+}
+
+.build-order-list-item__tags {
+  height: 72px;
+}

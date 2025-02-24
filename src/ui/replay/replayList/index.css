@@ -1,0 +1,11 @@
+.replay-list__filters {
+  display: flex; 
+  gap: 8px;
+}
+
+.replay-list__items {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}

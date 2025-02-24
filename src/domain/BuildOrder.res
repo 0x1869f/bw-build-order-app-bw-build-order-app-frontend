@@ -18,6 +18,8 @@ module Info = {
     name: string,
     race: Race.t,
     opponentRace: Race.t,
+    tags: array<Tag.t>,
+    creator: Id.t,
   }
 }
 
@@ -28,12 +30,18 @@ type new = {
   race: Race.t,
   opponentRace: Race.t,
   links: array<string>,
-  tags: array<Id.t>
+  tags: array<Tag.t>
 }
 
 type t = {
-  ...new,
   id: Id.t,
   creator: Id.t,
+  name: string,
+  description: option<string>,
+  steps: array<Step.t>,
+  race: Race.t,
+  opponentRace: Race.t,
+  links: array<string>,
+  tags: array<Tag.t>
 }
 
