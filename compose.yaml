@@ -5,8 +5,10 @@ services:
       - 443:443
       - 80:80
     volumes:
-      - broodwar-replays-static:/usr/share/nginx/html/static/
+      - broodwar-replays-static:/var/www/html/static/
       - broodwar-replays-certs:/etc/ssl/app-certs/
+    environment:
+      - NGINX_HOST=${HOST}
 
 volumes:
   broodwar-replays-static:
