@@ -2,12 +2,18 @@ services:
   broodwar-replays-frontent:
     build: .
     ports:
+      - 443:443
       - 80:80
     volumes:
       - broodwar-replays-static:/usr/share/nginx/html/static/
+      - broodwar-replays-certs:/etc/ssl/app-certs/
 
 volumes:
   broodwar-replays-static:
     external: true
     name: broodwar-replays-static
+  broodwar-replays-certs:
+    external: true
+    name: broodwar-replays-certs
+
 
