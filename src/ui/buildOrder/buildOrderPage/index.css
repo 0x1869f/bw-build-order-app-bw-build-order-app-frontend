@@ -6,5 +6,16 @@
 
 .build-order-page__info__race {
   display: flex;
+  align-items: center;
   gap: 4px;
+}
+
+.build-order-page__info__creator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.build-order-page__description {
+  width: 500px;
 }

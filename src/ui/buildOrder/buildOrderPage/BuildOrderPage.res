@@ -4,23 +4,29 @@
 let make = (~bo: BuildOrder.t) => {
   let creator = Signal.computed(() => {
     switch UserStorage.admins -> Signal.get -> Dict.get(bo.creator) {
-      | Some(admin) => `By ${admin.nickname}`
-      | None => ""
+      | Some(admin) => <div className="build-order-page__info__creator">
+          <Mui.Typography variant={Subtitle1}>{"By " -> React.string}</Mui.Typography>
+          <Mui.Typography variant={H6} color={PrimaryMain}>{admin.nickname -> React.string}</Mui.Typography>
+        </div>
+      | None => <div />
     }
   })
 
   <div>
     <div className="build-order-page__info">
-      <div>{bo.name -> React.string}</div>
+      <Mui.Typography variant={H2}>{bo.name -> React.string}</Mui.Typography>
 
       <div className="build-order-page__info__race">
-        <Mui.Avatar src={bo.race -> RaceIconStorage.getByRace} />
+        <Mui.Avatar variant={Square} src={bo.race -> RaceIconStorage.getByRace} />
         <span>{"vs" -> React.string}</span>
-        <Mui.Avatar src={bo.opponentRace -> RaceIconStorage.getByRace} />
+        <Mui.Avatar variant={Square} src={bo.opponentRace -> RaceIconStorage.getByRace} />
       </div>
 
-      <div>{creator -> Signal.get -> React.string}</div>
-      <div>{bo.description -> Option.getOr("") -> React.string}</div>
+      {creator -> Signal.get}
+
+      <Mui.Typography variant={Body1} className="build-order-page__description">
+        {bo.description -> Option.getOr("") -> React.string}
+      </Mui.Typography>
 
       <TagList tags={bo.tags} />
     </div>
