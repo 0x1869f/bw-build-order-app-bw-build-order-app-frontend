@@ -34,6 +34,9 @@ let make = (~variant: variant) => {
         -> Array.concat(tags, _)
   })
 
+  let isDisabled = Signal.computed(() => {
+    name -> Signal.get -> String.length === 0
+  })
 
   let addStep = (element: BuildOrder.Step.item) => {
     let steps = buildOrderSteps -> Signal.get
@@ -338,6 +341,7 @@ let make = (~variant: variant) => {
   let controls = Signal.useComputed(() => {
     <div className="form__actions">
       <Mui.Button
+        disabled={isDisabled -> Signal.get}
         size={Mui.Button.Small}
         onClick={(_) => save() -> ignore}
         variant={Mui.Button.Contained}

@@ -22,16 +22,23 @@ let make = (
       | Upgrade(value) => (value.name, value.image)
     }
 
-    let cancellationStatus = step.isCanceled ? "renderer__build-order__item_canceled" : ""
+    let cancellationStatus = step.isCanceled ? "renderer__build-order__item__card_canceled" : ""
 
-    <div key={step.id} className={`renderer__build-order__item ${cancellationStatus}`}>
-      <div className="renderer__build-order__item__element">
-        <img className="renderer__build-order__item__image" src={image} />
-        <div>{React.string(name)}</div>
+    <div key={step.id} className="renderer__build-order__item">
+      <div className={`renderer__build-order__item__card ${cancellationStatus}`}>
+        <div className="renderer__build-order__item__element">
+          <img className="renderer__build-order__item__image" src={image} />
+          <div>{React.string(name)}</div>
+        </div>
+        <div className="renderer__build-order__item__supply">
+          <span>{React.string(`${supply -> Int.toString}/${supplyLimit -> Int.toString}`)}</span>
+        </div>
       </div>
-      <div className="renderer__build-order__item__supply">
-        <span>{React.string(`${supply -> Int.toString}/${supplyLimit -> Int.toString}`)}</span>
-      </div>
+
+      {step.comment -> String.length > 0
+        ? <Mui.Typography variant={Body1}>{step.comment -> React.string}</Mui.Typography>
+        : <div />
+      }
     </div>
   }
 
