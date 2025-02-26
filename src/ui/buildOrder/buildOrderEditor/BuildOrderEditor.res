@@ -397,59 +397,79 @@ let make = (~variant: variant) => {
   })
 
   <div>
-    <div>
-      <RacePicker
-        value={playerRace -> Signal.get}
-        onUpdate={(v) => changePlayerRace(v)}
-        disabled={racePickerIsDisabled}
-      />
-      <Mui.Divider
-        orientation={Mui.Divider.Vertical}
-        variant={Mui.Divider.Middle}
-        flexItem={true}
-      />
-      <RacePicker
-        value={opponentRace -> Signal.get}
-        onUpdate={(v) => opponentRace -> Signal.set(v)}
-        disabled={racePickerIsDisabled}
-      />
-      <Mui.Divider
-        orientation={Mui.Divider.Vertical}
-        variant={Mui.Divider.Middle}
-        flexItem={true}
-      />
+    <div className="form__content">
+      <div>
+        <Mui.InputLabel>
+          {React.string("Player race")}
+        </Mui.InputLabel>
+
+        <RacePicker
+          value={playerRace -> Signal.get}
+          onUpdate={(v) => changePlayerRace(v)}
+          disabled={racePickerIsDisabled}
+        />
+      </div>
+
+      <div>
+        <Mui.InputLabel>
+          {React.string("Opponent race")}
+        </Mui.InputLabel>
+        <RacePicker
+          value={opponentRace -> Signal.get}
+          onUpdate={(v) => opponentRace -> Signal.set(v)}
+          disabled={racePickerIsDisabled}
+        />
+      </div>
+
       <TagSelector
         tags={tags -> Signal.get}
         selected={selectedTags -> Signal.get}
         onUpdate={v => selectedTags -> Signal.set(v)}
       />
-    </div>
 
-    <div>
-      <Mui.TextField
-        value={name -> Signal.get}
-        onChange={v => name -> Signal.set((v -> Form.stringValue).value)}
-        label={"name *" -> React.string}
+      <div>
+        <Mui.TextField
+          value={name -> Signal.get}
+          onChange={v => name -> Signal.set((v -> Form.stringValue).value)}
+          label={"name *" -> React.string}
+          />
+      </div>
+
+      <div>
+        <Mui.TextField
+          value={description -> Signal.get}
+          multiline={true}
+          minRows={3}
+          maxRows={3}
+          onChange={v => description -> Signal.set((v -> Form.stringValue).value)}
+          label={"description" -> React.string}
         />
+      </div>
     </div>
 
     <div className="editor__panel">
       <div>
-        <span>{React.string("Buildings")}</span>
+        <Mui.Typography variant={H5}>
+          {"Buildings" ->React.string}
+        </Mui.Typography>
         <div className="editor__panel__button-group">
           {buildBuildingButtons -> Signal.get -> React.array}
         </div>
       </div>
 
       <div>
-        <span>{React.string("Units")}</span>
+        <Mui.Typography variant={H5}>
+          {"Units" ->React.string}
+        </Mui.Typography>
         <div className="editor__panel__button-group">
           {buildUnitButtons -> Signal.get -> React.array}
         </div>
       </div>
 
       <div>
-        <span>{React.string("Upgrades")}</span>
+        <Mui.Typography variant={H5}>
+          {"Upgrades" ->React.string}
+        </Mui.Typography>
         <div className="editor__panel__button-group">
           {buildUpgradeButtons -> Signal.get -> React.array}
         </div>
