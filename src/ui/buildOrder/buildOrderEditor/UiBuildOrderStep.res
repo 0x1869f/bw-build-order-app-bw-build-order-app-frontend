@@ -31,7 +31,19 @@ let toStep = (step: t): BuildOrder.Step.t => {
     : None,
 }
 
-let make = (element: BuildOrder.Step.item, ~isRemovable: bool = true): t => {
+let make = (element: BuildOrder.Step.item): t => {
+  {
+    id: Uuid.make(),
+    comment: "",
+    element,
+    isRemovable: true,
+    isCanceled: false,
+    supplyLimitUpBy: 0,
+    showComment: false,
+  }
+}
+
+let makeDefault = (element: BuildOrder.Step.item): t => {
   let supplyLimitUpBy = switch element {
     | Building(v) => v.supply
     | Unit(v) => v.supply
@@ -42,11 +54,9 @@ let make = (element: BuildOrder.Step.item, ~isRemovable: bool = true): t => {
     id: Uuid.make(),
     comment: "",
     element,
-    isRemovable,
+    isRemovable: false,
     isCanceled: false,
     supplyLimitUpBy,
     showComment: false,
   }
 }
-
-let makeDefault = (element: BuildOrder.Step.item): t => element -> make(~isRemovable=false)
