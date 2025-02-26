@@ -51,6 +51,8 @@ let make = (~player: Player.t) => {
     links
   }
 
+  let links = getLinks()
+
   <Mui.Card
     className="player-card"
     elevation={4}
@@ -61,14 +63,21 @@ let make = (~player: Player.t) => {
       className="player-card__content"
     >
       <Mui.Avatar
-        sx={Mui.Sx.obj({height: Mui.System.Value.Number(68.0), width: Mui.System.Value.Number(68.0)})}
+        variant={Square}
+        sx={Mui.Sx.obj({height: Mui.System.Value.Number(240.0), width: Mui.System.Value.Number(200.0)})}
         src={avatar}
       />
-      <div>{player.nickname -> React.string}</div>
+        <Mui.Box className="player-card__name-container" color={PrimaryMain}>
+        <div className="player-card__name">
+          <Mui.Typography variant={Mui.Typography.H6}>
+            {player.nickname -> React.string}
+          </Mui.Typography>
+        </div>
+      </Mui.Box>
     </Mui.CardContent>
     </Mui.CardActionArea>
 
-    <Mui.CardActions>
+    <Mui.CardActions className="player-card__actions">
       {getLinks() -> React.array}
     </Mui.CardActions>
   </Mui.Card>

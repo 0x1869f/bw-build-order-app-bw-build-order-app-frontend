@@ -3,8 +3,22 @@
 }
 
 .player-card__content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
+  padding: 0 !important;
+  position: relative;
+}
+
+.player-card__name-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200px;
+}
+
+.player-card__name {
+  text-align: center;
+  padding: 4px;
+}
+
+.player-card__actions {
+  height: 56px;
 }
