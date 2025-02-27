@@ -6,6 +6,7 @@ let request = async (url: Url.t, config: Request.config): result<'b, AppError.t>
   switch r -> Response.status {
     | 200 => Ok(await r -> Response.json)
     | 201 => Ok(await r -> Response.json)
+    | 204 => Ok(await r -> Response.json)
     | 301 => Error(DocumentRelocated)
     | 302 => Error(DocumentRelocated)
     | 400 => Error(InvalidData(r -> Response.statusText))

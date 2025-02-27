@@ -42,6 +42,7 @@ let make = (~onClose:unit => ()) => {
             label={"password *" -> React.string}
             value={password -> Signal.get}
             onChange={v => password -> Signal.set((v -> Form.stringValue).value)}
+            type_="password"
           />
         </div>
 

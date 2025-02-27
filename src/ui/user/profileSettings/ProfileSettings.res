@@ -6,7 +6,10 @@ let make = () => {
   let oldPassword = Signal.useSignal("")
   let newPassword = Signal.useSignal("")
 
-  let nickname = Signal.useSignal("")
+  let nickname = switch UserStorage.currentUser -> Signal.get {
+    | Some(user) => user.nickname
+    | None => ""
+  } -> Signal.useSignal
 
   let clearPassword = () => {
     oldPassword -> Signal.set("")
@@ -16,6 +19,14 @@ let make = () => {
   let isPasswordUpdateDisabled = Signal.computed(() => {
     [oldPassword, newPassword]
       -> Array.some(s => s -> Signal.get -> String.length === 0)
+  })
+
+  let isNicknameUpdateDisabled = Signal.computed(() => {
+    let name = nickname -> Signal.get
+    name -> String.length === 0 || switch UserStorage.currentUser -> Signal.get {
+      | Some(user) => user.nickname === name
+      | None => false
+    }
   })
 
   let updatePassword = async () => {
@@ -95,7 +106,7 @@ let make = () => {
 
       <Mui.CardActions>
         <Mui.Button
-          disabled={nickname -> Signal.get -> String.length === 0}
+          disabled={isNicknameUpdateDisabled -> Signal.get}
           onClick={(_) => updateNickanme() -> ignore}
           variant={Contained}
         >
