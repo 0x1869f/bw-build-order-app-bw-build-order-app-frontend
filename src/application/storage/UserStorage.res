@@ -46,9 +46,7 @@ let updateNickname = async (nickname: string) => {
 
 
 let init = async () => {
-  let login = LocalStorage.get(LocalStorage.Token) -> Option.isSome
-
-  if (login) {
+  if LocalStorage.get(LocalStorage.Token) -> Option.isSome {
     switch await UserRepository.getCurrent() {
       | Ok(user) => currentUser -> Signal.set(Some(user))
       | Error(_) => ()

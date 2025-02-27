@@ -8,6 +8,7 @@ let make = () => {
   let logOut = () => {
     isShown -> Signal.set(false)
     UserStorage.logout()
+    Route.BuildOrderList -> Route.to
   }
 
   let goToSettings = () => {

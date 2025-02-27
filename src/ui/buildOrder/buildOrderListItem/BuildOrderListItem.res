@@ -2,6 +2,8 @@
 
 @react.component
 let make = (~item: BuildOrder.Info.t) => {
+  Signal.track()
+
   let toBuildOrderEditor = async () => {
     switch await BuildOrderRepository.get(item.id) {
       | Ok(bo) => Route.BuildOrderEditor(bo) -> Route.to
