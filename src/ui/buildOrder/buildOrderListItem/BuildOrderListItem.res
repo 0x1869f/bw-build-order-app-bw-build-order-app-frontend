@@ -16,18 +16,22 @@ let make = (~item: BuildOrder.Info.t) => {
     } -> ignore
   }
 
-  let actions = Signal.computed(() => switch UserStorage.isAdmin -> Signal.get {
-    | true => <Mui.CardActions className="build-order-list-item__actions">
-        <Mui.IconButton
-          onClick={(e) => {
-            e -> ReactEvent.Mouse.stopPropagation
-            toBuildOrderEditor() -> ignore
-          }}
-        >
-          <Lucide.Pencil />
-        </Mui.IconButton>
-      </Mui.CardActions>
-    | false => <div />
+  let actions = Signal.computed(() => switch UserStorage.currentUser -> Signal.get {
+    | Some(user) =>  if user.id === item.creator || user.role === User.Root {
+        <Mui.CardActions className="build-order-list-item__actions">
+          <Mui.IconButton
+            onClick={(e) => {
+              e -> ReactEvent.Mouse.stopPropagation
+              toBuildOrderEditor() -> ignore
+            }}
+          >
+            <Lucide.Pencil />
+          </Mui.IconButton>
+        </Mui.CardActions>
+      } else {
+        <div />
+      }
+    | None => <div />
   })
 
   let getAdmin = () => {
