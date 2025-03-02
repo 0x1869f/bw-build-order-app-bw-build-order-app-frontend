@@ -2,7 +2,7 @@ services:
   broodwar-replays-frontent:
     build: .
     ports:
-      - localhost:8081:80
+      - 127.0.0.1:8081:80
     volumes:
       - broodwar-replays-static:/var/www/html/static/
     environment:
