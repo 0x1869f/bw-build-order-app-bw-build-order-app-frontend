@@ -1,4 +1,4 @@
-FROM node:22-alpine3.21 as dev
+FROM node:22-alpine3.21 AS dev
 
 WORKDIR /code
 
@@ -9,11 +9,13 @@ RUN yarn install --frozen-lockfile
 COPY . /code
 RUN yarn run res:build && yarn run build
 
-FROM nginx:alpine as prod
+FROM nginx:alpine AS prod
 
-COPY --from=dev /code/dist/ /var/www/html
-COPY robot.txt /var/www/html
-COPY nginx.conf /etc/nginx/templates/default.conf.template
+COPY --from=dev /code/dist/ /usr/share/nginx/html
+COPY robot.txt /usr/share/nginx/html
+COPY env.sh /docker-entrypoint.d/env.sh
+
+RUN chmod +x /docker-entrypoint.d/env.sh
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
