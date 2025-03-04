@@ -22,5 +22,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag bw-build-order-app-frontend:latest
+        docker build . --file Dockerfile --tag ghcr.io/0x1869f/bw-build-order-app-frontend:latest
         docker push ghcr.io/0x1869f/bw-build-order-app-frontend:latest
