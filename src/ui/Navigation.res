@@ -5,32 +5,31 @@ type navigationItem = {
 
 let routes = [{
   route: Route.BuildOrderList,
-  text: "build orders",
+  text: "Build orders",
 },
 {
   route: Route.ReplayList,
-  text: "replays",
+  text: "Replays",
 },
 {
   route: Route.PlayerList,
-  text: "players",
+  text: "Players",
 }]
 
 
 @react.component
 let make = () => {
   let navigation = routes -> Array.map(r => {
-    let color = Route.currentRoute -> Signal.get === r.route ? Mui.Button.Secondary : Mui.Button.Primary
+    let isCurrent = Route.currentRoute -> Signal.get === r.route
 
-    <Mui.Button
+    <TabButton
       key={r.text}
       onClick={_ => r.route -> Route.to}
-      size={Large}
-      color={color}
-      variant={Text}>
+      selected={isCurrent}
+    >
         {r.text -> React.string}
-    </Mui.Button>
+    </TabButton>
   })
 
-  <div>{navigation -> React.array}</div>
+  <div className="d-flex gap-24">{navigation -> React.array}</div>
 }

@@ -7,7 +7,6 @@ type t =
   | BuildOrderEditor(BuildOrder.t)
   | BuildOrder(BuildOrder.t) 
   | PlayerList
-  | ProfileSettings
 
 let currentRoute = Signal.useMake(BuildOrderList)
 

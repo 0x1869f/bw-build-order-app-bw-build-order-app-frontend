@@ -2,6 +2,8 @@
 
 @react.component
 let make = (~bo: BuildOrder.t) => {
+  Signal.track()
+
   let creator = Signal.computed(() => {
     switch UserStorage.admins -> Signal.get -> Dict.get(bo.creator) {
       | Some(admin) => <div className="build-order-page__info__creator">

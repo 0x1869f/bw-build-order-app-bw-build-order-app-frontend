@@ -1,5 +1,4 @@
 %%raw("import './index.css'")
-%%raw("import './index.css'")
 
 @react.component
 let make = () => {

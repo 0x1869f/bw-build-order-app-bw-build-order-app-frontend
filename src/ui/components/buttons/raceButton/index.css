@@ -1,0 +1,71 @@
+.race-button {
+  transition: border,background;
+  transition-duration: 150ms;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+  box-sizing: border-box;
+}
+
+.race-button {
+  background: var(--bg-global);
+  border-radius: var(--radius);
+
+  &:active {
+    background: transparent;
+  }
+}
+
+.race-button__protoss {
+  &:hover {
+    border: 1px solid var(--stroke-race-green);
+    background: linear-gradient(180deg, rgba(33, 33, 41, 0) 0%, rgba(45, 143, 71, 0.15) 48.9%, rgba(51, 205, 88, 0.23) 100%);
+  }
+
+  &:active {
+    border: 1px solid var(--stroke-race-green);
+    background: transparent;
+  }
+  
+}
+
+.race-button__protoss_selected {
+  border: 1px solid var(--stroke-race-green);
+}
+
+.race-button__terran {
+  &:hover {
+    border: 1px solid var(--stroke-race-blue);
+    background: linear-gradient(180deg, rgba(33, 33, 41, 0) 0%, rgba(58, 90, 171, 0.15) 48.9%, rgba(37, 87, 211, 0.51) 100%);
+  }
+
+  &:active {
+    border: 1px solid var(--stroke-race-blue);
+    background: transparent;
+  }
+
+}
+
+.race-button__terran_selected {
+  border: 1px solid var(--stroke-race-blue);
+}
+
+.race-button__zerg {
+  &:hover {
+    border: 1px solid var(--stroke-race-red);
+    background: linear-gradient(180deg, rgba(33, 33, 41, 0) 0%, rgba(155, 0, 0, 0.11) 48.9%, rgba(155, 0, 0, 0.42) 100%);
+  }
+
+  &:active {
+    border: 1px solid var(--stroke-race-red);
+    background: transparent;
+  }
+}
+
+.race-button__zerg_selected {
+  border: 1px solid var(--stroke-race-red);
+}
+

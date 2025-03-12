@@ -54,7 +54,7 @@ let make = () => {
         onClick={(_) => name -> Signal.set("")}
         variant={Mui.Button.Outlined}
       >
-        <Icon.Close.Filled />
+        <MuiIcon.Close.Filled />
       </Mui.Button>
     </div>
 

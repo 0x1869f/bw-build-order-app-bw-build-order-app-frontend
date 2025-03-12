@@ -1,0 +1,22 @@
+.text-field {
+  &:focus-within .text-field__container {
+    border: 1px solid var(--stroke-input-active)
+  }
+
+  &:focus-within label {
+    color: var(--stroke-input-active)
+  }
+  &:focus-within .text-field__icon {
+    color: var(--stroke-input-active)
+  }
+}
+
+.text-field__input {
+  width: 100%;
+  outline: none;
+  background-color: var(--bg-global);
+  color: var(--text-primary);
+  border: none;
+  height: 46px;
+}
+

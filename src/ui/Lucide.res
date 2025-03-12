@@ -117,3 +117,65 @@ module UserRoundPen = {
     ~absoluteStrokeWidth: bool=?,
   ) => React.element = "UserRoundPen"
 }
+
+/// check usage of icons above
+
+module Search = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "Search"
+}
+
+module ChevronRight = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "ChevronRight"
+}
+
+module ChevronDown = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "ChevronDown"
+}
+
+module ChevronUp = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "ChevronUp"
+}
+
+module X = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "X"
+}

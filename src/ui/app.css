@@ -1,0 +1,52 @@
+@import url("style/reset.css");
+@import url("style/spacing.css");
+@import url("style/surface.css");
+@import url("style/color.css");
+@import url("style/border.css");
+@import url("style/image.css");
+@import url("style/flex.css");
+@import url("style/typography.css");
+@import url("style/cursor.css");
+@import url("style/position.css");
+@import url("style/text.css");
+
+
+html {
+  background-color: var(--bg-global);
+}
+
+/* old styles, delete --- start */
+.image {
+  height: 36px;
+  width: 36px;
+}
+
+.form__content {
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form__actions {
+  display: flex;
+  gap: 8px;
+}
+/* --- end */
+
+/* app page */
+.app {
+  margin-top: 64px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

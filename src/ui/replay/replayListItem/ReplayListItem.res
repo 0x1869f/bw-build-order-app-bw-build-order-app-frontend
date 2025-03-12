@@ -32,7 +32,7 @@ let make = (~replay: Replay.t) => {
                 href={link}
                 download={name}
               >
-                <Icon.Download.Filled />
+                <MuiIcon.Download.Filled />
               </a>
             </Mui.IconButton> 
           </Mui.CardActions>

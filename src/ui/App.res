@@ -1,4 +1,5 @@
-%%raw("import './App.css'")
+%%raw("import './global.css'")
+%%raw("import './app.css'")
 
 @react.component
 let make = () => {
@@ -38,19 +39,25 @@ let make = () => {
       | Route.ReplayList => <ReplayList />
       | Route.BuildOrderEditor(bo) => <BuildOrderEditor variant={BuildOrderEditor.Edit(bo)} />
       | Route.BuildOrderList => <BuildOrderList />
-      | Route.ProfileSettings => <ProfileSettings />
       | _ => <BuildOrderList />
     }
   )
 
   isLoading -> Signal.get
     ? <Mui.LinearProgress />
-    : <div>
-      <Header />
-      <Notification />
-      <Navigation />
-      <div className="view-container">
-        {child -> Signal.get}
+
+    : <Mui.StyledEngineProvider injectFirst=true>
+      <div className="app">
+        <Header />
+
+        <Notification />
+
+        <div className="pa-16">
+          {child -> Signal.get}
+          <SidePanel />
+        </div>
+
+        <Footer />
       </div>
-    </div>
+    </Mui.StyledEngineProvider>
 }

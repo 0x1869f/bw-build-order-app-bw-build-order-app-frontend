@@ -282,7 +282,7 @@ let make = (~variant: variant) => {
             onClick={(_) => removeSupply(step)}
             variant={Mui.Button.Outlined}
           >
-            {React.string(step.supplyLimitUpBy -> Int.toString)} <Icon.Close.Filled />
+            {React.string(step.supplyLimitUpBy -> Int.toString)} <MuiIcon.Close.Filled />
           </Mui.Button>
         </div>
     )} else {
@@ -296,7 +296,7 @@ let make = (~variant: variant) => {
             onClick={(_) => removeStep(step)}
             variant={Mui.Button.Outlined}
           >
-            <Icon.Close.Filled />
+            <MuiIcon.Close.Filled />
           </Mui.Button>
         </div>
       )

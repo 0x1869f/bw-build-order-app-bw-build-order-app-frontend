@@ -1,0 +1,18 @@
+.icon-button {
+  background: inherit;
+  color: var(--link-enabled);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--link-hover);
+  }
+
+  &:active {
+    color: var(--link-pressed);
+  }
+
+  &:disabled {
+    color: var(--link-disabled);
+    cursor: auto;
+  }
+}

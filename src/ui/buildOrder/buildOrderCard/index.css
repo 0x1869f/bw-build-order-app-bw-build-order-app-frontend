@@ -1,0 +1,11 @@
+.action-card:active .build-order-card {
+  color: var(--text-primary)
+}
+
+.action-card:hover .build-order-card {
+  color: var(--text-primary)
+}
+
+.build-order-card__build-order-name {
+  width: 238px;
+}

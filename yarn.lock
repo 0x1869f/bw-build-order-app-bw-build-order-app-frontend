@@ -621,10 +621,10 @@
   resolved "https://registry.yarnpkg.com/@rescript-mui/material/-/material-5.0.0-rc.2.tgz#fe64814932950006f45acf9a241fd58b6dc335f9"
   integrity sha512-WwTSvhTimFXwfbVfn20vx0U8t4OXCWUMGQXPqFEhdoy3Q9KP7HKdXMUcmKmeaYPUZVKAPEruyonbozLunmYbnA==
 
-"@rescript/core@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@rescript/core/-/core-1.5.0.tgz#de6fcd8f815ca17e39e43d93352bfd2fa87c5015"
-  integrity sha512-XTKtpMfqCF5qmYWrdTJjhy2lDIWwwlOFgI5Vo5eB/kzRWXvM9R29ZpMoVXbn0fURl+uF3GvFp2/CbZlF3wt1Zg==
+"@rescript/core@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@rescript/core/-/core-1.6.1.tgz#159670c94d64a2b8236f46be2bf09a007b1ece08"
+  integrity sha512-vyb5k90ck+65Fgui+5vCja/mUfzKaK3kOPT4Z6aAJdHLH1eljEi1zKhXroCiCtpNLSWp8k4ulh1bdB5WS0hvqA==
 
 "@rescript/react@^0.12.1":
   version "0.12.2"
@@ -1177,10 +1177,10 @@ rescript-webapi@^0.9.1:
   resolved "https://registry.yarnpkg.com/rescript-webapi/-/rescript-webapi-0.9.1.tgz#23bffe94619b52b49beac53ee8d94c919c950e8b"
   integrity sha512-6havxEsyCgcCB4EsH8ac2QpLVbv5Nv6IMjTIn6XifpU/bjgXEvMTpNJ78/JEKtSH6kFUeFV/T/QHPRSZb66Rew==
 
-rescript@11.1.1:
-  version "11.1.1"
-  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.1.1.tgz#3e3b59751e5d7472156615e13d957c70d5342c5c"
-  integrity sha512-FMELeoiR1n3LzBdBt+k7U4l0vsz5Xh0HBSHf+0NhyhzZkMRLkEKEDNrcqZc6RIux9bxmxoO+zEa9qFM01VOXAw==
+rescript@^11.1.4:
+  version "11.1.4"
+  resolved "https://registry.yarnpkg.com/rescript/-/rescript-11.1.4.tgz#9a42ebc4fc5363707e39cef5b3188160b63bee42"
+  integrity sha512-0bGU0bocihjSC6MsE3TMjHjY0EUpchyrREquLS8VsZ3ohSMD+VHUEwimEfB3kpBI1vYkw3UFZ3WD8R28guz/Vw==
 
 resolve-from@^4.0.0:
   version "4.0.0"

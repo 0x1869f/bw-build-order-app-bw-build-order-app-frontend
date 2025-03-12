@@ -1,0 +1,49 @@
+.primary-button {
+  padding: 1px;
+  background: red;
+  height: max-content;
+  width: max-content;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #1F1F25 0%, #76768B 100%);
+  transition: background;
+  transition-duration: 150ms;
+
+  &:has(button:active) {
+    background: var(--text-primary);
+  }
+
+  &:hover {
+    background: var(--text-primary);
+  }
+
+  &:has(button:disabled) {
+    background: var(--stroke-input-disabled);
+  }
+}
+
+.primary-button__button {
+  outline: none;
+  cursor: pointer;
+  border-radius: var(--radius);
+  background-color: var(--bg-global);
+  padding: 11.5px 24px;
+  color: var(--text-primary);
+  border: none;
+  transition: background;
+  transition-duration: 150ms;
+
+  &:hover {
+    background: var(--button-hover);
+  }
+
+  &:active {
+    background: var(--button-pressed);
+  }
+
+  &:disabled {
+    cursor: auto;
+    background: var(--button-disabled);
+    color: var(--text-disabled);
+  }
+}
+

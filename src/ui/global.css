@@ -1,0 +1,45 @@
+:root {
+  /* surfaces */
+  --bg-global: #121212;
+  --bg-primary: #1A1A1E;
+  --bg-tertiary: #262730;
+
+  /* colors */
+  --stroke-race-green: #33CD58;
+  --stroke-race-blue: #2D68FB;
+  --stroke-race-red: #C10F0F;
+  --stroke-primary: #1E1E1E;
+  --stroke-secondary: #262730;
+  --stroke-on-light: #121212;
+  --stroke-input-active: #FFFFFF;
+  --stroke-input-enabled: #2F343F;
+  --stroke-input-disabled: #393939;
+  --link-enabled: #FFFFFF;
+  --link-hover: #FFFFFF;
+  --link-pressed: #8C8C9E;
+  --link-disabled: #3C3C3C;
+
+  --status-alert: #DD662B;
+
+  --button-hover: #2F2F35;
+  --button-pressed: #373747;
+  --button-disabled: #262626;
+
+  /* radius */
+  --radius: 12px;
+  --radius-full: 50%;
+
+  /* text */
+  --text-primary: #F6F6F6;
+  --text-primary-selected: #EDF4FC;
+  --text-secondary: #76768B;
+  --text-disabled: #9A9A9A;
+
+  /* breakpoints */
+  --xs: 0;
+  --sm: 576px;
+  --md: 768px;
+  --lg: 992px;
+  --xl: 1200px;
+  --xxl: 1400px;
+}

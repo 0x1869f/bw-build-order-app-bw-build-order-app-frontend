@@ -1,0 +1,15 @@
+.text-color-primary {
+  color: var(--text-primary);
+}
+
+.text-color-primary_selected {
+  color: var(--text-primary-selected);
+}
+
+.text-color-secondary {
+  color: var(--text-secondary);
+}
+
+.text-color-disabled {
+  color: var(--text-disabled);
+}

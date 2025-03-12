@@ -1,0 +1,52 @@
+.radius {
+  border-radius: var(--radius);
+}
+
+.radius-full {
+  border-radius: var(--radius-full);
+}
+
+.border {
+  border: 1px solid var(--stroke-primary)
+}
+
+.border-bottom {
+  border-bottom: 1px solid var(--stroke-primary)
+}
+
+.border-top {
+  border-top: 1px solid var(--stroke-primary)
+}
+
+.border-secondary {
+  border: 1px solid var(--stroke-secondary)
+}
+
+.border-secondary-bottom {
+  border: 1px solid var(--stroke-secondary)
+}
+
+.border-protoss {
+  border: 1px solid var(--stroke-race-green)
+}
+
+.border-terran {
+  border: 1px solid var(--stroke-race-blue)
+}
+
+.border-zerg {
+  border: 1px solid var(--stroke-race-red)
+}
+
+.border-input-active {
+  border: 1px solid var(--stroke-input-active)
+}
+
+.border-on-light {
+  border: 1px solid var(--stroke-on-light)
+}
+
+.border-on-light-right {
+  border-right: 1px solid var(--stroke-on-light);
+}
+

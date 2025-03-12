@@ -1,0 +1,29 @@
+.secondary-button {
+  background: inherit;
+  color: var(--link-enabled);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--link-hover);
+  }
+
+  &:hover .secondary-button__text {
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-offset: 20%;
+    text-decoration-thickness: 0%;
+  }
+
+  &:active {
+    color: var(--link-pressed);
+  }
+
+  &:disabled {
+    color: var(--link-disabled);
+    cursor: auto;
+  }
+}
+
+.secondary-button__container {
+  padding: 13.5px 0;
+}

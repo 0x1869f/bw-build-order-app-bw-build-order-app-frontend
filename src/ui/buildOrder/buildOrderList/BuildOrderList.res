@@ -9,11 +9,6 @@ let make = () => {
   let selectedTags: Signal.t<dict<Tag.t>> = Dict.make() -> Signal.useSignal
   let name = Signal.useSignal("")
 
-  let clear = () => {
-    Dict.make() -> Signal.set(selectedTags, _)
-    name -> Signal.set("")
-  }
-
   let boList = Signal.computed(() => {
     let selected = selectedTags -> Signal.get
     let selectedCount = selected -> Dict.keysToArray -> Array.length
@@ -41,7 +36,7 @@ let make = () => {
         }
     )
     -> Array.map(v => {
-      <BuildOrderListItem
+      <BuildOrderCard
         item={v}
         key={v.id}
       />
@@ -75,51 +70,39 @@ let make = () => {
       -> Signal.set(selectedTags, _)
   }
 
-  <div>
-    <div className="build-order-list__filters">
-      <div>
-        <Mui.InputLabel>
-          {React.string("Player race")}
-        </Mui.InputLabel>
+  <div className="build-order-list position-relative">
+    <div className="position-absolute top-0 left-0 w-full">
+      <div className="bg-primary radius d-flex gap-8 align-end">
+        <div className="d-flex gap-20 border-on-light-right px-16 pt-12 pb-16">
+          <RaceButtonGroup
+            label="Player race"
+            selected={playerRace -> Signal.get}
+            onSelect={(v) => {
+              playerRace -> Signal.set(v)
+              cleanSelectedTags()
+            }}
+          />
 
-        <RacePicker
-          value={playerRace -> Signal.get}
-          onUpdate={(v) => {
-            playerRace -> Signal.set(v)
-            cleanSelectedTags()
-          }}
-        />
+          <RaceButtonGroup
+            label="Opponent race"
+            selected={opponentRace -> Signal.get}
+            onSelect={(v) => {
+              opponentRace -> Signal.set(v)
+              cleanSelectedTags()
+            }}
+          />
+        </div>
+
+        <div className="px-16 pt-12 pb-16">
+          <TextField
+            value={name -> Signal.get}
+            onChange={v => name -> Signal.set(v)}
+            placeholder="Search by name"
+            label="Build order"
+            icon={<Lucide.Search size={20} />}
+          />
+        </div>
       </div>
-
-      <div>
-        <Mui.InputLabel>
-          {React.string("Opponent race")}
-        </Mui.InputLabel>
-
-        <RacePicker
-          value={opponentRace -> Signal.get}
-          onUpdate={(v) => {
-            opponentRace -> Signal.set(v)
-            cleanSelectedTags()
-          }}
-        />
-      </div>
-
-      <div>
-        <Mui.TextField
-          value={name -> Signal.get}
-          onChange={v => name -> Signal.set((v -> Form.stringValue).value)}
-          label={React.string("name")}
-        />
-      </div>
-
-      <Mui.Button
-        className="build-order-list__filters__clear"
-        onClick={(_) => clear()}
-        variant={Mui.Button.Outlined}
-      >
-        <Icon.Close.Filled />
-      </Mui.Button>
     </div>
 
     <TagSelector
@@ -128,9 +111,14 @@ let make = () => {
       onUpdate={tags => selectedTags -> Signal.set(tags)}
     />
 
-    <div className="build-order-list__items">
-      {boList -> Signal.get -> React.array}
+    <div className="pt-40">
+      <div className="text-h6 text-color-primary pb-16">
+        {"Build orders" -> React.string}
+      </div>
+
+      <div className="d-flex flex-wrap gap-16">
+        {boList -> Signal.get -> React.array}
+      </div>
     </div>
   </div>
-
 }

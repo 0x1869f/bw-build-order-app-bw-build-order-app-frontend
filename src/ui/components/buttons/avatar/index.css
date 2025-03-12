@@ -1,0 +1,18 @@
+.avatar {
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 6px 11px;
+
+  &:hover {
+    background: var(--button-hover);
+    color: var(--text-primary);
+  }
+
+  &:active {
+    background: var(--button-pressed);
+    color: var(--text-primary);
+  }
+}
