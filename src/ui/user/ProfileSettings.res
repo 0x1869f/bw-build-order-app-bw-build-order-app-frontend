@@ -6,10 +6,15 @@ let make = (
   let oldPassword = Signal.useSignal("")
   let newPassword = Signal.useSignal("")
 
-  let nickname = switch UserStorage.currentUser -> Signal.get {
-    | Some(user) => user.nickname
-    | None => ""
-  } -> Signal.useSignal
+
+  let getCurrentNickname = () => {
+    switch UserStorage.currentUser -> Signal.get {
+        | Some(user) => user.nickname
+        | None => ""
+    }
+  }
+
+  let nickname = getCurrentNickname() -> Signal.useSignal
 
   let clearPassword = () => {
     oldPassword -> Signal.set("")
@@ -48,8 +53,15 @@ let make = (
     }
   }
 
+  let isNicknameCancelDisabled = Signal.computed(() => {
+    switch UserStorage.currentUser -> Signal.get {
+      | Some(v) => nickname -> Signal.get ===  v.nickname
+      | None => false
+    }
+  })
+
   <div>
-    <div>
+    <div className="px-32 pt-32 pb-40">
       <div className="text-h6 text-color-primary">{"Edit your nickname" -> React.string}</div>
 
       <div className="mt-24">
@@ -69,16 +81,17 @@ let make = (
         </PrimaryButton>
 
         <SecondaryButton
-          onClick={(_) => nickname -> Signal.set("")}
+          disabled={isNicknameCancelDisabled -> Signal.get}
+          onClick={(_) => getCurrentNickname() -> Signal.set(nickname, _)}
         >
           {"Cancel" -> React.string}
         </SecondaryButton>
       </div>
     </div>
 
-    <div className="w-full border-secondary-bottom mt-44" />
+    <div className="w-full border-secondary-bottom" />
 
-    <div className="mt-44">
+    <div className="mt-40 px-32">
       <div className="text-h6 text-color-primary">{"Edit your password" -> React.string}</div>
 
       <div className="mt-24">

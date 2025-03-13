@@ -9,3 +9,7 @@
 .build-order-card__build-order-name {
   width: 238px;
 }
+
+.build-order-card__tags {
+  height: 52px;
+}

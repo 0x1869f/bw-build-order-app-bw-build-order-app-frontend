@@ -17,7 +17,7 @@ let make = (
 
   let content = Signal.computed(() => {
     <div className={containerStyle -> Signal.get}>
-      <div className="side-panel__container__title d-flex justify-space-between pb-32">
+      <div className="side-panel__container__title d-flex justify-space-between pa-32">
         <div className="text-h5 text-color-primary">
           {SidePanelStorage.title -> Signal.get -> React.string}
         </div>

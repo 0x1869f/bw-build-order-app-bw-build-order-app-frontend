@@ -26,7 +26,7 @@ let make = () => {
       -> Promise.then((_) => {
         isLoading -> Signal.set(false)
         Promise.resolve()
-      }) -> ignore
+     }) -> ignore
 
     None
   })
@@ -44,7 +44,8 @@ let make = () => {
   )
 
   isLoading -> Signal.get
-    ? <Mui.LinearProgress />
+    // ? <Mui.LinearProgress />
+    ? <Loader />
 
     : <Mui.StyledEngineProvider injectFirst=true>
       <div className="app">

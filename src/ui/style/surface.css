@@ -9,3 +9,9 @@
 .bg-tertiary {
   background-color: var(--bg-tertiary);
 }
+
+.scrollable-container {
+  overflow-y: scroll;
+  scrollbar-color: var(--bg-tertiary) var(--bg-primary);
+  scrollbar-width: 12px;
+}

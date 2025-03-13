@@ -3,18 +3,20 @@ type navigationItem = {
   text: string,
 }
 
-let routes = [{
-  route: Route.BuildOrderList,
-  text: "Build orders",
-},
-{
-  route: Route.ReplayList,
-  text: "Replays",
-},
-{
-  route: Route.PlayerList,
-  text: "Players",
-}]
+let routes = [
+  {
+    route: Route.BuildOrderList,
+    text: "Build orders",
+  },
+  // {
+  //   route: Route.ReplayList,
+  //   text: "Replays",
+  // },
+  // {
+  //   route: Route.PlayerList,
+  //   text: "Players",
+  // }
+]
 
 
 @react.component

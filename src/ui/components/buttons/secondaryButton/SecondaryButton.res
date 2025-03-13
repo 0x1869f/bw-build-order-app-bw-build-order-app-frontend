@@ -4,9 +4,11 @@
 let make = (
   ~onClick: unit => unit,
   ~children: React.element,
+  ~disabled: bool=false,
   ~icon: option<React.element>=?,
 ) => {
   <button
+    disabled={disabled}
     onClick={(e) => {
       e -> ReactEvent.Mouse.stopPropagation
       onClick()

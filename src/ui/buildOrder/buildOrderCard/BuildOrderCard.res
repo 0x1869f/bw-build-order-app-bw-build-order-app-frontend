@@ -1,7 +1,11 @@
 %%raw("import './index.css'")
 
 @react.component
-let make = (~item: BuildOrder.Info.t) => {
+let make = (
+  ~selectedTags: dict<Tag.t>,
+  ~onTagUpdate: dict<Tag.t> => unit,
+  ~item: BuildOrder.Info.t
+) => {
   Signal.track()
 
   let toBuildOrder = async () => {
@@ -19,22 +23,20 @@ let make = (~item: BuildOrder.Info.t) => {
   }
 
   <ActionCard onClick={(_) => toBuildOrder() -> ignore}>
-    <div className="build-order-card d-flex gap-4 align-center">
-      <img src={RaceIconStorage.getByRace(item.race)} />
-
-      <span className="text-caption text-color-secondary">
-        {"vs" -> React.string}
-      </span>
-
-      <img src={RaceIconStorage.getByRace(item.opponentRace)} />
-    </div>
-
     <div className="build-order-card__build-order-name truncate text-subtitle text-color-primary pt-8">
       {item.name -> React.string}
     </div>
 
     <div className="text-caption text-color-secondary pt-8">
       {`By ${getAdmin()}` -> React.string}
+    </div>
+
+    <div className="build-order-card__tags mt-12">
+      <TagSelector 
+        onUpdate={onTagUpdate}
+        selected={selectedTags}
+        tags={item.tags}
+      />
     </div>
   </ActionCard>
 }

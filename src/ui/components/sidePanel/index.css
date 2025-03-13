@@ -19,15 +19,16 @@
   top: 0;
   right: 0;
   height: 100%;
-  padding: 32px;
   background-color: var(--bg-primary);
   border-left: 1px solid var(--stroke-secondary);
   width: 0;
   transition: width;
   transition-duration: 150ms;
+  visibility: hidden;
 }
 
 .side-panel__container_active {
   width: 520px;
   box-sizing: border-box;
+  visibility: visible;
 }

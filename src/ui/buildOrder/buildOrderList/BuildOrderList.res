@@ -37,6 +37,8 @@ let make = () => {
     )
     -> Array.map(v => {
       <BuildOrderCard
+        selectedTags={selectedTags ->Signal.get}
+        onTagUpdate={(v) => selectedTags -> Signal.set(v)}
         item={v}
         key={v.id}
       />
@@ -69,6 +71,37 @@ let make = () => {
       -> Dict.fromArray
       -> Signal.set(selectedTags, _)
   }
+
+  let openTagDialogue = () =>  {
+    SidePanelStorage.openPanel(
+      <TagDialogue
+        onClose={() => {
+          SidePanelStorage.closePanel()
+        }}
+      />,
+      ~newTitle="Add a new tag"
+    )
+  }
+
+  let controls = Signal.computed(() => {
+    if UserStorage.isAdmin -> Signal.get {
+      <div className="d-flex gap-16">
+        <SecondaryButton
+          onClick={_ => openTagDialogue()}
+          icon={<Lucide.Plus size={16} />}>
+          {"Add tag" -> React.string}
+        </SecondaryButton>
+
+        <SecondaryButton
+          onClick={_ => Route.NewBuildOrder -> Route.to}
+          icon={<Lucide.Plus size={16} />}>
+          {"Add build order" -> React.string}
+        </SecondaryButton>
+      </div>
+    } else {
+      <div />
+    }
+  })
 
   <div className="build-order-list position-relative">
     <div className="position-absolute top-0 left-0 w-full">
@@ -103,19 +136,29 @@ let make = () => {
           />
         </div>
       </div>
-    </div>
 
-    <TagSelector
-      tags={tags -> Signal.get}
-      selected={selectedTags -> Signal.get}
-      onUpdate={tags => selectedTags -> Signal.set(tags)}
-    />
+      <div className="mt-32 pb-8 border-bottom d-flex justify-space-between">
+        <div className="text-h1 text-color-primary">
+          {"Build orders" -> React.string}
+        </div>
 
-    <div className="pt-40">
-      <div className="text-h6 text-color-primary pb-16">
-        {"Build orders" -> React.string}
+        <div>
+          {controls -> Signal.get}
+        </div>
       </div>
 
+      <div className="pt-16">
+        <TagSelector
+          tags={tags -> Signal.get}
+          selected={selectedTags -> Signal.get}
+          onUpdate={tags => selectedTags -> Signal.set(tags)}
+          smallGap={false}
+        />
+      </div>
+
+    </div>
+
+    <div className="">
       <div className="d-flex flex-wrap gap-16">
         {boList -> Signal.get -> React.array}
       </div>

@@ -32,6 +32,14 @@
   letter-spacing: 0px;
 }
 
+.text-caption-small {
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 110%;
+  letter-spacing: 0px;
+}
+
 .text-subtitle {
   font-family: Inter;
   font-weight: 500;
@@ -50,6 +58,24 @@
 }
 
 .text-h5 {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 130%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+.text-h2 {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 140%;
+  letter-spacing: 0.15px;
+  vertical-align: middle;
+}
+
+.text-h1 {
   font-family: Inter;
   font-weight: 500;
   font-size: 24px;

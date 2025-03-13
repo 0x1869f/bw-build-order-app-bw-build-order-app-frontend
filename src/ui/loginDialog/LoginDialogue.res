@@ -24,7 +24,7 @@ let make = (
     || password -> Signal.get -> String.length === 0
   })
 
-  <div>
+  <div className="px-32">
       <TextField
         label="Account name"
         value={name -> Signal.get}

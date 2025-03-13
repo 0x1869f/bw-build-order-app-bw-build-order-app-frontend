@@ -28,7 +28,7 @@ let make = (
       {label -> React.string}
     </label>
 
-    <div className="text-field__container bg-global d-flex radius border-box h-48 border">
+    <div className="text-field__container bg-global d-flex radius border-box border">
       {switch icon {
         | Some(v) => <div onClick={(_) => setFocus()} className="pl-12 text-field__icon text-color-secondary cursor-text d-flex align-center">
             {v}

@@ -1,14 +1,14 @@
 @import url("style/reset.css");
 @import url("style/spacing.css");
-@import url("style/surface.css");
 @import url("style/color.css");
 @import url("style/border.css");
 @import url("style/image.css");
-@import url("style/flex.css");
+@import url("style/display.css");
 @import url("style/typography.css");
 @import url("style/cursor.css");
 @import url("style/position.css");
 @import url("style/text.css");
+@import url("style/surface.css");
 
 
 html {

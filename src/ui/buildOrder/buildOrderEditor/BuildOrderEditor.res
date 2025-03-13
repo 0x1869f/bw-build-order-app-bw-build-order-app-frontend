@@ -400,7 +400,7 @@ let make = (~variant: variant) => {
       -> Array.map(makeBuildOrderElement)
   })
 
-  <div>
+  <div className="text-color-primary">
     <div className="form__content">
       <div>
         <Mui.InputLabel>

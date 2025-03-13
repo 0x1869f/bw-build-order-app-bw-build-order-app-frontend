@@ -2,7 +2,7 @@
 let make = (
   ~selected: Race.t,
   ~onSelect: (Race.t) => unit,
-  ~label: string,
+  ~label: option<string>=?,
 ) => {
     let races = [Race.Protoss, Race.Terran, Race.Zerg]
 
@@ -15,11 +15,14 @@ let make = (
       /> })
 
   <div>
-    <div className="text-caption text-color-primary_selected pl-4 no-select">
-      {label -> React.string}
-    </div>
+    {switch label {
+      | Some(value) => <div className="text-caption text-color-primary_selected pl-4 no-select mb-8">
+        {value -> React.string}
+      </div>
+      | None => <div />
+    }}
 
-    <div className="d-flex gap-4 mt-8">
+    <div className="d-flex gap-4">
       {buttons() -> React.array}
     </div>
   </div>
