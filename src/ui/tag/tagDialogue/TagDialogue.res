@@ -15,10 +15,10 @@ let make = (~onClose: unit => ()) => {
       race: newTagRace -> Signal.get,
     }) {
       | Ok(_) => {
-        MessageStore.notifyCreation(MessageStore.Tag)
-        onClose()
+        MessageStore.notifyOk(~entity=MessageStore.Tag, ~operation=Create)
+        newTagName -> Signal.set("")
       }
-      | Error(e)=> MessageStore.notifyAppError(e, MessageStore.Tag)
+      | Error(e)=> MessageStore.notifyError(e, ~entity=MessageStore.Tag, ~operation=Create)
     }
   }
 
@@ -31,8 +31,6 @@ let make = (~onClose: unit => ()) => {
   let itemList = Signal.computed(() => {
     let tags = TagStorage.items
       -> Signal.get
-      -> Map.values
-      -> Iterator.toArray
       -> Array.filter((t) => t.race === tagListRace -> Signal.get)
       -> Array.map((i) => <TagListItem key={i.id} tag={i} />)
 
@@ -90,7 +88,7 @@ let make = (~onClose: unit => ()) => {
     <div className="pa-32">
       <div className="d-flex justify-space-between align-center">
         <div className="text-h2 text-color-primary">
-          {"Edit tags" -> React.string}
+          {"Edit tags by race" -> React.string}
         </div>
 
         <RaceButtonGroup

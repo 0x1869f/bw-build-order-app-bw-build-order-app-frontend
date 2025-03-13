@@ -14,6 +14,10 @@ let make = (~bo: BuildOrder.t) => {
     }
   })
 
+  let tags = Signal.computed(() => {
+    bo.tags -> Array.map((t) => TagStorage.tagDict -> Signal.get -> Dict.getUnsafe(t)) 
+  })
+
   <div>
     <div className="build-order-page__info">
       <Mui.Typography variant={H2}>{bo.name -> React.string}</Mui.Typography>
@@ -30,7 +34,7 @@ let make = (~bo: BuildOrder.t) => {
         {bo.description -> Option.getOr("") -> React.string}
       </Mui.Typography>
 
-      <TagList tags={bo.tags} />
+      <TagList tags={tags -> Signal.get} />
     </div>
 
     <BuildOrderRenderer

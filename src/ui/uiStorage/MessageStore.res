@@ -1,4 +1,4 @@
-type severity = Mui.Alert.severity
+type severity = Error | Warning | Success
 
 type message = {
   severity: severity,
@@ -16,7 +16,7 @@ let clean = (id: Uuid.t) => setTimeout(() => {
   -> Signal.set(errors, _)
 }, 3000)
 
-let notify = (severity: severity, text: string, ~title: string) => {
+let notify = (text: string, ~title: string, ~severity: severity) => {
   let id = Uuid.make()
   [ ...errors -> Signal.get, { text, title, severity, id} ]
     -> Signal.set(errors, _)
@@ -33,20 +33,37 @@ type entity =
   | @as("password") Password
   | @as("nickname") Nickname
 
-let notifyAppError = (error: AppError.t, entity: entity) => {
+type operation =
+  | @as(0) Create
+  | @as(1) Read
+  | @as(2) Update
+  | @as(3) Delete
+
+let notifyError = (
+  error: AppError.t,
+  ~operation: operation,
+  ~entity: entity,
+) => {
   switch error {
-    | InvalidData(e) => notify(Error, e, ~title="invalid input")
-    | Unauthorized => notify(Error, "Authorization is required", ~title="access error")
-    | DocumentDoesNotExist => notify(Error, "This page does not exist", ~title="access error")
-    | Conflict => notify(Error, `${entity :> string} already exists`, ~title="conflict")
-    | _ => notify(Error, "the application cannot execute this request", ~title="server error")
+    | InvalidData(e) => notify(e, ~severity=Error, ~title="invalid input")
+    | Unauthorized => notify("Authorization is required", ~severity=Error, ~title="access error")
+    | DocumentDoesNotExist => notify("This page does not exist", ~severity=Error, ~title="access error")
+    | Conflict => {
+      switch operation {
+        | Delete =>  notify(`some entities depend on this ${entity :> string}`, ~severity=Error, ~title="conflict")
+        | _ =>  notify(`${entity :> string} already exists`, ~severity=Error, ~title="conflict")
+      }
+    }
+    | _ => notify("the application cannot execute this request", ~severity=Error, ~title="server error")
   }
 }
 
-let notifyCreation = (entity: entity) => {
-  notify(Success, `${entity :> string} was successfully added`, ~title="success")
-}
-
-let notifyUpdate = (entity: entity) => {
-  notify(Success, `${entity :> string} was successfully updated`, ~title="success")
+let notifyOk = (~entity: entity, ~operation: operation) => {
+  switch operation {
+    | Create => `${entity :> string} was successfully added`
+    | Update => `${entity :> string} was successfully updated`
+    | Delete => `${entity :> string} was successfully deleted`
+    | Read => `${entity :> string} was successfully received`
+  }
+  -> notify(~severity=Success, ~title="success")
 }

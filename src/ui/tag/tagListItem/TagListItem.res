@@ -18,8 +18,21 @@ let make = (
     updatedName -> Signal.set(tag.name)
   }
 
-  let update = () => {
-    Console.log("update")
+  let update = async () => {
+    switch await TagStorage.update(tag.id, ~name=updatedName -> Signal.get) {
+      | Ok() => {
+        MessageStore.notifyOk(~entity=MessageStore.Tag, ~operation=Update)
+        isChange -> Signal.set(false)
+      }
+      | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.Tag, ~operation=Update)
+    }
+  }
+
+  let delete = async () => {
+    switch await TagStorage.delete(tag.id) {
+      | Ok() => MessageStore.notifyOk(~entity=MessageStore.Tag, ~operation=Delete)
+      | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.Tag, ~operation=Delete)
+    }
   }
 
   let actions = Signal.computed(() => {
@@ -28,7 +41,7 @@ let make = (
         <div>
           <IconButton
             disabled={updatedName -> Signal.get === tag.name}
-            onClick={_ => update()}
+            onClick={_ => update() -> ignore}
           >
             <Lucide.Check size={16} />
           </IconButton>
@@ -39,9 +52,13 @@ let make = (
         </div>
       }
       | false => {
-        <div className="tag-list-item__edit-icon">
+        <div className="tag-list-item__icons d-flex">
           <IconButton onClick={_ => isChange -> Signal.set(true)}>
             <Lucide.Pencil size={16} />
+          </IconButton>
+
+          <IconButton onClick={_ => delete() -> ignore}>
+            <Lucide.Trash size={16} />
           </IconButton>
         </div>
       }

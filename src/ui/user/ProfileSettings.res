@@ -37,19 +37,19 @@ let make = (
   let updatePassword = async () => {
     switch await UserRepository.updatePassword(oldPassword -> Signal.get, newPassword -> Signal.get) {
       | Ok(_) => {
-        MessageStore.notifyUpdate(MessageStore.Password)
+        MessageStore.notifyOk(~entity=MessageStore.Password, ~operation=Update)
         clearPassword()
       }
-      | Error(e) => MessageStore.notifyAppError(e, MessageStore.Password)
+      | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.Password, ~operation=Update)
     }
   }
   let updateNickanme = async () => {
     switch await UserRepository.updateNickname(nickname -> Signal.get) {
       | Ok(_) => {
-        MessageStore.notifyUpdate(MessageStore.Nickname)
+        MessageStore.notifyOk(~entity=MessageStore.Nickname, ~operation=Update)
         nickname -> Signal.set("")
       }
-      | Error(e) => MessageStore.notifyAppError(e, MessageStore.Nickname)
+      | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.Nickname, ~operation=Update)
     }
   }
 

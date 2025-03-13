@@ -44,10 +44,10 @@ let make = (~onClose: unit => ()) => {
           : None,
       }, avatar -> Signal.get) {
         | Ok() => {
-          MessageStore.notifyCreation(MessageStore.Player)
+          MessageStore.notifyOk(~entity=MessageStore.Player, ~operation=Create)
           onClose()
         }
-        | Error(e) => MessageStore.notifyAppError(e, MessageStore.Player)
+        | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.Player, ~operation=Create)
       }
     }
   }

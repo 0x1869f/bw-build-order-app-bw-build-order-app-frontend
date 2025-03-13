@@ -1,18 +1,15 @@
-let items: Signal.t<Map.t<Id.t, Tag.t>> = Map.make() -> Signal.useMake
+let items: Signal.t<array<Tag.t>> = [] -> Signal.useMake
 
-module Arr = {
-  type t<'a> = array<'a>
-
-  @send
-  external findLastIndex: (t<'a>, ('a) => bool) => int = "findLastIndex" 
-}
+let tagDict = Signal.computed(() => {
+  items
+    -> Signal.get
+    -> Array.map((tag) => (tag.id, tag))
+    -> Dict.fromArray
+})
 
 let init = async () => {
   switch await TagRepository.getAll() {
-    | Ok(value) => value
-      -> Array.map(t => (t.id, t))
-      -> Map.fromArray
-      -> Signal.set(items, _)
+    | Ok(value) => items -> Signal.set(value)
     | Error(_) => ()
   }
 }
@@ -20,34 +17,34 @@ let init = async () => {
 let create = async (tag: Tag.new) => {
   switch await TagRepository.create(tag) {
     | Ok(value) => {
-      let arr = items
-        -> Signal.get
-        -> Map.entries
-        -> Iterator.toArray
-
-      let index = arr
-        -> Arr.findLastIndex((t) => {
-          let (_, tag) = t
-          tag.race === value.race}
-      )
-
-      arr
-        -> Array.toSpliced(~start=index + 1, ~remove=0, ~insert=[(value.id, value)])
-        -> Map.fromArray
+      [...items -> Signal.get, value]
         -> Signal.set(items, _)
-
       Ok()
     }
     | Error(e) => Error(e)
   }
 }
 
-let byRace = (race: Race.t) => items
-  -> Signal.get
-  -> Map.values
-  -> Iterator.toArray
-  -> Array.filter(tag => tag.race === race)
+let update = async (id: Id.t, ~name: string) => {
+  switch await TagRepository.update(id, ~name=name) {
+    | Ok(value) => items
+      -> Signal.get
+      -> Array.map((tag) => tag.id === value.id ? value : tag)
+      -> Signal.set(items, _)
+      Ok() 
+    | Error(e)=> Error(e)
+  }
+}
 
-let byId = (id: Id.t) => items
-  -> Signal.get
-  -> Map.get(id)
+let delete = async (id: Id.t) => {
+  switch await TagRepository.delete(id) {
+    | Ok() => {
+      items
+        -> Signal.get
+        -> Array.filter((tag) => tag.id !== id)
+        -> Signal.set(items, _)
+      Ok() 
+    }
+    | Error(e)=> Error(e)
+  }
+}

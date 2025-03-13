@@ -25,7 +25,7 @@ let make = () => {
     )
   }
 
-  <div className="header w-full border-bottom">
+  <div className="header w-full border-bottom bg-global">
     <div className="d-flex h-64 px-16 justify-space-between">
       <Navigation />
 

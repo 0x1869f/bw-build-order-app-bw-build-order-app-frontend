@@ -113,10 +113,10 @@ let make = (~onClose: unit => ()) => {
       replay -> Signal.get -> Option.getUnsafe
     ) {
       | Ok(_)=> {
-        MessageStore.notifyCreation(MessageStore.Replay)
+        MessageStore.notifyOk(~entity=MessageStore.Replay, ~operation=Create)
         onClose()
       }
-      | Error(e)=> MessageStore.notifyAppError(e, MessageStore.Replay)
+      | Error(e)=> MessageStore.notifyError(e, ~entity=MessageStore.Replay, ~operation=Create)
     }
   }
 

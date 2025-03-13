@@ -22,7 +22,7 @@ let make = () => {
           switch bo.name -> String.includes(query) {
             | true => {
               let matches = bo.tags -> Array.reduce(0,
-                (sum, tag) => sum + switch selected -> Dict.get(tag.id) {
+                (sum, tag) => sum + switch selected -> Dict.get(tag) {
                   | Some(_) => 1
                   | None => 0
                 })
@@ -49,12 +49,15 @@ let make = () => {
     let race1 = playerRace -> Signal.get
     let race2 = opponentRace -> Signal.get
 
-    let tags = race1 -> TagStorage.byRace
-    race1 === race2
-      ? tags
-      : race2
-        -> TagStorage.byRace
-        -> Array.concat(tags, _)
+    let items = TagStorage.items -> Signal.get
+    if race1 === race2 {
+      items -> Array.filter((t) => t.race === race1)
+    } else {
+      [
+        ...items -> Array.filter((t) => t.race === race1),
+        ...items -> Array.filter((t) => t.race === race2)
+      ]
+    }
   })
 
   let cleanSelectedTags = () => {

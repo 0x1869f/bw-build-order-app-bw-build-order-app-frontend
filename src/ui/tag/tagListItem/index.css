@@ -5,12 +5,12 @@
     border-bottom: none;
   }
 
-  &:hover .tag-list-item__edit-icon {
+  &:hover .tag-list-item__icons {
     visibility: visible;
   }
 }
 
-.tag-list-item__edit-icon {
+.tag-list-item__icons {
   visibility: hidden;
 }
 

@@ -11,7 +11,7 @@ let make = (
   let toBuildOrder = async () => {
     switch await BuildOrderRepository.get(item.id) {
       | Ok(bo)=> bo -> Route.BuildOrder -> Route.to
-      | Error(e) => e -> MessageStore.notifyAppError(MessageStore.BuildOrder)
+      | Error(e) => e -> MessageStore.notifyError(~entity=MessageStore.BuildOrder, ~operation=Read)
     } -> ignore
   }
 
@@ -21,6 +21,11 @@ let make = (
       | None => ""
     }
   }
+
+  let tags = Signal.computed(() => {
+    item.tags
+      -> Array.map((t) => TagStorage.tagDict -> Signal.get -> Dict.getUnsafe(t))
+  })
 
   <ActionCard onClick={(_) => toBuildOrder() -> ignore}>
     <div className="build-order-card__build-order-name truncate text-subtitle text-color-primary pt-8">
@@ -35,7 +40,7 @@ let make = (
       <TagSelector 
         onUpdate={onTagUpdate}
         selected={selectedTags}
-        tags={item.tags}
+        tags={tags -> Signal.get}
       />
     </div>
   </ActionCard>

@@ -48,26 +48,6 @@ module Step = {
   }
 }
 
-module Info = {
-  type t = {
-    id: Id.t,
-    name: string,
-    race: Race.t,
-    opponentRace: Race.t,
-    tags: array<Id.t>,
-    creator: Id.t,
-  }
-
-  let toBuildOrderInfo = (info: t): BuildOrder.Info.t => {
-    id: info.id,
-    name: info.name,
-    race: info.race,
-    opponentRace: info.opponentRace,
-    tags: info.tags -> Array.map(t => t -> TagStorage.byId -> Option.getUnsafe),
-    creator: info.creator,
-  }
-}
-
 type new = {
   name: string,
   description: option<string>,
@@ -93,16 +73,7 @@ let toBuildOrder = (bo: t): BuildOrder.t => {
   race: bo.race,
   opponentRace: bo.opponentRace,
   links: bo.links,
-  tags: bo.tags -> Array.map(t => t -> TagStorage.byId -> Option.getUnsafe),
-}
-
-let toBuildOrderInfo = (bo: t): BuildOrder.Info.t => {
-  id: bo.id,
-  name: bo.name,
-  race: bo.race,
-  opponentRace: bo.opponentRace,
-  tags: bo.tags -> Array.map(t => t -> TagStorage.byId -> Option.getUnsafe),
-  creator: bo.creator,
+  tags: bo.tags,
 }
 
 let fromNewBuildOrder = (bo: BuildOrder.new): new => {
@@ -112,5 +83,5 @@ let fromNewBuildOrder = (bo: BuildOrder.new): new => {
   race: bo.race,
   opponentRace: bo.opponentRace,
   links: bo.links,
-  tags: bo.tags -> Array.map(t => t.id)
+  tags: bo.tags,
 }

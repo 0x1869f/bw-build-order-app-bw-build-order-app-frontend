@@ -18,10 +18,10 @@ let make = (~onClose: unit => ()) => {
         name: name -> Signal.get,
       }, image -> Signal.get) {
         | Ok(_) => {
-          MessageStore.notifyCreation(MessageStore.Map)
+          MessageStore.notifyOk(~entity=MessageStore.Map, ~operation=Create)
           onClose()      
         }
-        | Error(e) => MessageStore.notifyAppError(e, MessageStore.Map)
+        | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.Map, ~operation=Create)
       }
     }
   }

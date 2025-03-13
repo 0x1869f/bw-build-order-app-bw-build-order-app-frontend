@@ -10,30 +10,6 @@ module Ban = {
   ) => React.element = "Ban"
 }
 
-module Trash = {
-  @module("lucide-react")
-  @react.component
-  external make: (
-    ~className: string=?,
-    ~size: int=?,
-    ~color: string=?,
-    ~strokeWidth: int=?,
-    ~absoluteStrokeWidth: bool=?,
-  ) => React.element = "Trash"
-}
-
-module Pencil = {
-  @module("lucide-react")
-  @react.component
-  external make: (
-    ~className: string=?,
-    ~size: int=?,
-    ~color: string=?,
-    ~strokeWidth: int=?,
-    ~absoluteStrokeWidth: bool=?,
-  ) => React.element = "Pencil"
-}
-
 module Check = {
   @module("lucide-react")
   @react.component
@@ -178,4 +154,28 @@ module X = {
     ~strokeWidth: int=?,
     ~absoluteStrokeWidth: bool=?,
   ) => React.element = "X"
+}
+
+module Trash = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "Trash"
+}
+
+module Pencil = {
+  @module("lucide-react")
+  @react.component
+  external make: (
+    ~className: string=?,
+    ~size: int=?,
+    ~color: string=?,
+    ~strokeWidth: int=?,
+    ~absoluteStrokeWidth: bool=?,
+  ) => React.element = "Pencil"
 }

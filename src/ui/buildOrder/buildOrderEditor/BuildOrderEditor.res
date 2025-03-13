@@ -26,12 +26,15 @@ let make = (~variant: variant) => {
     let race1 = playerRace -> Signal.get
     let race2 = opponentRace -> Signal.get
 
-    let tags = race1 -> TagStorage.byRace
-    race1 === race2
-      ? tags
-      : race2
-        -> TagStorage.byRace
-        -> Array.concat(tags, _)
+    let items = TagStorage.items -> Signal.get
+    if race1 === race2 {
+      items -> Array.filter((t) => t.race === race1)
+    } else {
+      [
+        ...items -> Array.filter((t) => t.race === race1),
+        ...items -> Array.filter((t) => t.race === race2)
+      ]
+    }
   })
 
   let isDisabled = Signal.computed(() => {
@@ -101,7 +104,7 @@ let make = (~variant: variant) => {
         name -> Signal.set(bo.name)
         bo.description -> Option.getOr("") -> Signal.set(description, _)
         bo.tags
-          -> Array.map(tag => (tag.id, tag))
+          -> Array.map(id => (id, TagStorage.tagDict -> Signal.get -> Dict.getUnsafe(id)))
           -> Dict.fromArray
           -> Signal.set(selectedTags, _) 
       }
@@ -313,27 +316,31 @@ let make = (~variant: variant) => {
       description: desc -> String.length > 0
         ? Some(desc)
         : None,
-      steps: buildOrderSteps -> Signal.get -> Array.map(UiBuildOrderStep.toStep),
+      steps: buildOrderSteps
+        -> Signal.get
+        -> Array.map(UiBuildOrderStep.toStep),
       race: playerRace -> Signal.get,
       opponentRace: opponentRace -> Signal.get,
       links: [],
-      tags: selectedTags -> Signal.get -> Dict.valuesToArray,
+      tags: selectedTags
+        -> Signal.get
+        -> Dict.keysToArray,
     }
 
     switch variant {
       | New => switch await BuildOrderStorage.create(newBo) {
         | Ok(_) => {
-          MessageStore.notifyCreation(MessageStore.BuildOrder)
+          MessageStore.notifyOk(~entity=MessageStore.BuildOrder, ~operation=Create)
           Route.BuildOrderList -> Route.to
         }
-        | Error(e) => MessageStore.notifyAppError(e, MessageStore.BuildOrder)
+        | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.BuildOrder, ~operation=Create)
       }
       | Edit(bo) => switch await BuildOrderStorage.update(newBo, bo.id) {
         | Ok(_) => {
-          MessageStore.notifyUpdate(MessageStore.BuildOrder)
+          MessageStore.notifyOk(~entity=MessageStore.BuildOrder, ~operation=Update)
           Route.BuildOrderList -> Route.to
         }
-        | Error(e) => MessageStore.notifyAppError(e, MessageStore.BuildOrder)
+        | Error(e) => MessageStore.notifyError(e, ~entity=MessageStore.BuildOrder, ~operation=Update)
       }
     }
   }
